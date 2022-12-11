@@ -7,15 +7,13 @@
 
 body{
     color: black;
-    font-family: 'Roboto', sans-serif;
-    
+    font-family: 'Poppins', sans-serif;
 }
 
 .main{
     height: 100vh;
     background-image: linear-gradient( to bottom right,#E0FFFF, #87CEEB, Aquamarine);
-    
-    
+     
     
 }
 
@@ -28,12 +26,18 @@ body{
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    font-size: 25px;
     
 }
 
 .main .container h2{
     color: rgb(236, 83, 83);
     
+    
+}
+
+
+
 }
 
 
