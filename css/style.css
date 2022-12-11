@@ -1,21 +1,39 @@
- {
+ *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    
 }
 
-body {
-    font-family: 'Montserrat', sans-serif;
-    background-color: black;
+body{
+    color: black;
+    font-family: 'Roboto', sans-serif;
+    
 }
 
-.container {
+.main{
     height: 100vh;
+    background-image: linear-gradient( to bottom right,#E0FFFF, #87CEEB, Aquamarine);
+    
+    
+    
+}
+
+.container{
+    height: 100vh;
+}
+
+.main .container{
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+    
 }
 
-.container h2 {
-    color: #fff;
+.main .container h2{
+    color: rgb(236, 83, 83);
+    
 }
+
+
