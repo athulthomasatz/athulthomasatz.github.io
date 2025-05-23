@@ -1,0 +1,63 @@
+:root[data-theme="light"] {
+  --background: #d5cb99;
+  --text: #1e1e1e;
+  --navbar-bg: #d5cb99;
+  --accent: #30ef0e;
+  --secondary-text: #4a4a4a;
+  --menu-hover: rgba(0, 0, 0, 0.1);
+  --project-tech-tag-background: #30ef0e;
+  --project-tech-tag-color: black; 
+}
+
+:root[data-theme="dark"] {
+  --background: #000000;
+  --text: #ffffff;
+  --navbar-bg: rgba(0, 0, 0, 0.9);
+  --accent: #64ffda;
+  --secondary-text: #8892b0;
+  --menu-hover: rgba(255, 255, 255, 0.1);
+  --project-tech-tag-background:  #64ffda;
+  --project-tech-tag-color: #000000;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "JetBrains Mono", sans-serif;
+  background-color: var(--background);
+  color: var(--text);
+  transition: all 0.3s ease;
+  scroll-behavior: smooth;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.footer {
+  background-color: var(--navbar-bg);
+  color: var(--text);
+  text-align: center;
+  padding: 10px 0;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+  }
+
+  .navbar a {
+    margin: 10px 0;
+  }
+}

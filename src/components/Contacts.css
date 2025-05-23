@@ -1,0 +1,148 @@
+.contact-section {
+  min-height: 60vh;
+  background: var(--background);
+  padding: 80px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.contact-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+}
+
+.contact-description {
+  color: var(--secondary-text);
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.email-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--navbar-bg);
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  margin: 2rem 0;
+}
+
+.email-icon {
+  color: var(--accent);
+  font-size: 1.2rem;
+}
+
+.email-text {
+  color: var(--text);
+  font-family: "JetBrains Mono", monospace;
+}
+
+.copy-button {
+  background: none;
+  border: none;
+  color: var(--text);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.copy-button:hover {
+  color: var(--accent);
+  background: var(--menu-hover);
+}
+
+.download-cv-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--accent);
+  color: var(--background);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  cursor: pointer;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.download-cv-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.download-cv-button svg {
+  font-size: 1rem;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.social-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  padding: 1rem;
+}
+
+.social-link svg {
+  font-size: 1.8rem;
+}
+
+.social-name {
+  font-size: 0.9rem;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  color: var(--accent);
+}
+
+.social-link:hover .social-name {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .social-links {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .email-container {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .download-cv-button {
+    margin-top: 0.5rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .contact-description {
+    font-size: 1.1rem;
+  }
+}
