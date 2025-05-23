@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/Portfolia/static/css/main.7bef4879.css",
-    "main.js": "/Portfolia/static/js/main.750a4dae.js",
-    "index.html": "/Portfolia/index.html",
-    "main.7bef4879.css.map": "/Portfolia/static/css/main.7bef4879.css.map",
-    "main.750a4dae.js.map": "/Portfolia/static/js/main.750a4dae.js.map"
+    "main.css": "/portfoliaathul.github.io/static/css/main.7bef4879.css",
+    "main.js": "/portfoliaathul.github.io/static/js/main.69a2abe6.js",
+    "index.html": "/portfoliaathul.github.io/index.html",
+    "main.7bef4879.css.map": "/portfoliaathul.github.io/static/css/main.7bef4879.css.map",
+    "main.69a2abe6.js.map": "/portfoliaathul.github.io/static/js/main.69a2abe6.js.map"
   },
   "entrypoints": [
     "static/css/main.7bef4879.css",
-    "static/js/main.750a4dae.js"
+    "static/js/main.69a2abe6.js"
   ]
 }
