@@ -96,10 +96,12 @@ const Description = styled(motion.p)`
 const Hero = () => {
   const [displayText, setDisplayText] = useState("");
   const skills = useMemo(() => [
-  "Software Engineer",
   "Web Developer",
-  "Front-end Developer",
-  "Back-end Developer",
+  "Full-Stack (MERN) Developer",
+  "Python Developer",
+  "Node.js Developer",
+
+
   // ... other skills
 ], []);
   const [skillIndex, setSkillIndex] = useState(0);

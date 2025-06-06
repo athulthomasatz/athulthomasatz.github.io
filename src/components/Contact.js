@@ -22,7 +22,7 @@ const Contact = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 const handleDownloadCV = () => {
-    const cvUrl = `${process.env.PUBLIC_URL}/assets/Resume athul thomas.pdf`;
+    const cvUrl = `${process.env.PUBLIC_URL}/assets/Resume_Athul_Thomas (3).pdf`;
     window.open(cvUrl, '_blank');
 };
   const socialLinks = [

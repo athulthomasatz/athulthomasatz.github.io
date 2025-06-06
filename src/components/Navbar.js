@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react"; 
+import React, { useState, useEffect } from "react";
 import { animateScroll as scroll } from "react-scroll";
 import { Link } from "react-scroll";
 import { FaBars, FaTimes, FaSun, FaMoon } from "react-icons/fa";
 import { useTheme } from "../context/ThemeContext";
 import "./Navbar.css";
- 
+import profileImage from "../assets/images/profile-compress.jpeg";
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
@@ -34,17 +35,20 @@ const Navbar = () => {
       <div className="navbar-container">
         <div className="navbar-logo" onClick={() => scroll.scrollToTop()}>
           <div className="logo-image-container">
-            <img
-              src="/images/profile compress.jpeg"
-              alt="Logo"
-              className="logo-image"
-            />
+            <img src={profileImage} alt="Logo" className="logo-image" />
           </div>
         </div>
         <div className="nav-controls">
-          <ul className={`nav-menu ${isOpen ? "active" : ""}`}> 
+          <ul className={`nav-menu ${isOpen ? "active" : ""}`}>
             <li style={{ "--i": 1 }}>
-              <Link to="hero" spy={true} smooth={true} offset={-80} duration={500} onClick={toggleMenu}>
+              <Link
+                to="hero"
+                spy={true}
+                smooth={true}
+                offset={-80}
+                duration={500}
+                onClick={toggleMenu}
+              >
                 Home
               </Link>
             </li>
