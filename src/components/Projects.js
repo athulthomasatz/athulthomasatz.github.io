@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaTimes, FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+import { FaGoogle, FaPython } from "react-icons/fa";
+import { SiDatacamp, SiCoursera, SiGoogle } from "react-icons/si";
 import "./Project.css";
 
 const Projects = () => {
@@ -52,14 +54,45 @@ const Projects = () => {
       title: "Associate Python Developer",
       issuer: "Datacamp",
       date: "Ongoing",
+      ProviderIcon: SiDatacamp,
       // credentialLink:
-        // "https://www.coursera.org/account/accomplishments/verify/99ENTPBYX4RJ",
+      // "https://www.coursera.org/account/accomplishments/verify/99ENTPBYX4RJ",
       // image: "/images/certificates/python.jpg",
     },
+    {
+      title: "GitHub Foundations",
+      issuer: "Datacamp",
+      date: "June 2025",
+      ProviderIcon: SiDatacamp,
+      credentialLink:
+        "https://www.datacamp.com/completed/statement-of-accomplishment/track/18dc3a9dc87bc0ac6d6a9d1e64b5bdaa89e3c413",
+      // image: "/images/certificates/python.jpg",
+    },
+    {
+      title: "Intermediate Python for Developers",
+      issuer: "Datacamp",
+      date: "June 2025",
+      ProviderIcon: SiDatacamp,
+      credentialLink:
+        "https://www.datacamp.com/completed/statement-of-accomplishment/course/79a5e71f5141dfe28a027f5247134a052757b08e",
+      // image: "/images/certificates/python.jpg",
+    },
+
+    {
+      title: "Intermediate SQL",
+      issuer: "Datacamp",
+      date: "June 2025",
+      ProviderIcon: SiDatacamp,
+      credentialLink:
+        "https://www.datacamp.com/completed/statement-of-accomplishment/course/1c2c378a882340ec916734791503b47c0a1edf58",
+      // image: "/images/certificates/python.jpg",
+    },
+
     {
       title: "Connect and Protect: Networks and Network Security",
       issuer: "Google & Coursera",
       date: "September 2024",
+      ProviderIcons: [SiGoogle, SiCoursera],
       credentialLink:
         "https://www.coursera.org/account/accomplishments/verify/99ENTPBYX4RJ",
       // image: "/images/certificates/python.jpg",
@@ -68,15 +101,17 @@ const Projects = () => {
       title: "Cloud Computing",
       issuer: "NPTEL",
       date: "November 2024",
+      // ProviderIcon: SiNptel,
       credentialLink:
         "https://archive.nptel.ac.in/content/noc/NOC24/SEM2/Ecertificates/106/noc24-cs118/Course/NPTEL24CS118S95870006903982864.pdf",
       image: "/images/certificates/web-dev.jpg",
     },
-    
+
     {
       title: "Tools of the Trade: Linux and SQL",
       issuer: "Google & Coursera",
       date: "July 2024",
+      ProviderIcons: [SiGoogle, SiCoursera],
       credentialLink:
         "https://www.coursera.org/account/accomplishments/verify/A75YUKLQQG8H",
       image: "/images/certificates/python.jpg",
@@ -85,13 +120,14 @@ const Projects = () => {
       title: "Foundations of Cybersecurity",
       issuer: "Google & Coursera",
       date: "June 2024",
+      ProviderIcons: [SiGoogle, SiCoursera],
       credentialLink:
         "https://www.coursera.org/account/accomplishments/verify/3GM8K2NNLTMQ",
       image: "/images/certificates/python.jpg",
     },
   ];
   return (
-    <> 
+    <>
       <section id="projects" className="projects-section">
         <motion.h2
           className="section-title"
@@ -206,6 +242,18 @@ const Projects = () => {
                 <p className="issuer">{cert.issuer}</p>
                 <p className="date">{cert.date}</p>
               </div>
+              {(cert.ProviderIcon || cert.ProviderIcons) && (
+                <div className="provider-logo">
+                  {cert.ProviderIcon && <cert.ProviderIcon />}
+                  {cert.ProviderIcons && (
+                    <div className="provider-icons">
+                      {cert.ProviderIcons.map((Icon, i) => (
+                        <Icon key={i} />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
             </motion.a>
           ))}
         </div>
