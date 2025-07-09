@@ -1,4 +1,4 @@
-import React, { useEffect, useState ,useMemo } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import "./Hero.css";
@@ -95,15 +95,18 @@ const Description = styled(motion.p)`
 
 const Hero = () => {
   const [displayText, setDisplayText] = useState("");
-  const skills = useMemo(() => [
-  "Web Developer",
-  "Full-Stack (MERN) Developer",
-  "Python Developer",
-  "Node.js Developer",
+  const skills = useMemo(
+    () => [
+      "Web Developer",
+      "Full-Stack (MERN) Developer",
+      "Python Developer",
+      "Node.js Developer",
+      "Software Engineer",
 
-
-  // ... other skills
-], []);
+      // ... other skills
+    ],
+    []
+  );
   const [skillIndex, setSkillIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [typingSpeed, setTypingSpeed] = useState(150);
@@ -170,12 +173,15 @@ const Hero = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            Hello! I’ve recently completed my Master of Computer Applications
-            (MCA) and am currently focused on expanding my skill set in Python
-            programming and data analysis. With a strong foundation in web
-            development and academic projects, I'm now diving deeper into the
-            world of data—exploring how insights can drive smarter decisions and
-            meaningful solutions.
+            Hello! I'm a Software Engineer at Zennode Technologies with a
+            Master's degree in Computer Applications (MCA). I have a solid
+            foundation in web development and hands-on experience through
+            various academic projects. Currently, I'm deepening my expertise in
+            the MERN stack, with a strong focus on React.js for building
+            dynamic, responsive user interfaces. I'm passionate about creating
+            efficient and scalable web applications, and I’m excited about how
+            modern web technologies can drive smarter, more impactful digital
+            solutions.
           </Description>
         </RightSection>
       </ContentWrapper>

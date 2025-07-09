@@ -7,9 +7,10 @@ import {
   FaCss3Alt,
   FaJs,
   FaGit,
+  FaPhp
 } from "react-icons/fa";
 import { SiMongodb, SiExpress, SiMysql } from "react-icons/si";
-import { motion } from "framer-motion";
+import { color, motion } from "framer-motion";
 
 import "./About.css";
 
@@ -24,6 +25,7 @@ const About = () => {
     { name: "MongoDB", icon: <SiMongodb />, color: "#47A248" },
     { name: "Express", icon: <SiExpress />, color: "#FFFF00" },
     { name: "SQL", icon: <SiMysql />, color: "#4479A1" },
+    {name :"PHP",icon:<FaPhp/>,color:"#6134eb"},
     { name: "Git", icon: <FaGit />, color: "#F05032" },
   ];
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaTimes, FaGithub, FaExternalLinkAlt } from "react-icons/fa";
-import { FaGoogle, FaPython } from "react-icons/fa";
+// import { FaGoogle, FaPython } from "react-icons/fa";
 import { SiDatacamp, SiCoursera, SiGoogle } from "react-icons/si";
 import "./Project.css";
 
