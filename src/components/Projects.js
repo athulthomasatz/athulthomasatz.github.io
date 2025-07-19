@@ -27,7 +27,7 @@ const Projects = () => {
       fullDescription:
         "The Hostel Management project aims to streamline and enhance the efficiency of managing hostel operations through a dedicated web application. This application is designed to improve the experience for both administrators and students by simplifying essential tasks such as room allocation, maintenance requests, fee payments, and communication.",
       techStack: ["React", "Node.js", "MongoDB", "Express"],
-      githubLink: "https://github.com/yourusername/project-one",
+      githubLink: "https://github.com/athulthomasatz/Hostel-Managment",
       // liveLink: "#",
       image: "/path-to-project-image.jpg",
     },
