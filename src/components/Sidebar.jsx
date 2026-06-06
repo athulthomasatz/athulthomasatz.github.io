@@ -206,9 +206,9 @@ export default function Sidebar() {
                 }}
                 className="w-[3px] h-9 rounded-full"
                 style={{
-                  backgroundColor: '#00f0ff',
+                  backgroundColor: '#ffffff',
                   boxShadow:
-                    '0 0 8px #00f0ff, 0 0 16px rgba(0,240,255,0.4), 0 0 32px rgba(0,240,255,0.15)',
+                    '0 0 8px #c8f0f3, 0 0 16px rgba(255,153,153,0.4), 0 0 32px rgba(255,153,153,0.15)',
                   transformOrigin: 'center',
                 }}
               />
@@ -228,9 +228,9 @@ export default function Sidebar() {
                 }}
                 className="absolute left-1/2 -translate-x-1/2 -ml-1 w-2.5 h-2.5 rounded-full"
                 style={{
-                  backgroundColor: '#00f0ff',
+                  backgroundColor: '#ffffff',
                   boxShadow:
-                    '0 0 8px 3px #00f0ff, 0 0 16px 6px rgba(0,240,255,0.5), 0 0 32px 12px rgba(0,240,255,0.25)',
+                    '0 0 8px 3px #ff9999, 0 0 16px 6px rgba(255,153,153,0.5), 0 0 32px 12px rgba(255,153,153,0.25)',
                 }}
               />
             )}

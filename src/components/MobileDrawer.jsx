@@ -198,9 +198,9 @@ export default function MobileDrawer() {
                               layoutId="mobileActiveIndicator"
                               className="absolute left-0 top-2 bottom-2 w-[3px] rounded-full"
                               style={{
-                                backgroundColor: '#00f0ff',
+                                backgroundColor: '#ff9999',
                                 boxShadow:
-                                  '0 0 8px #00f0ff, 0 0 16px rgba(0,240,255,0.4)',
+                                  '0 0 8px #ff9999, 0 0 16px rgba(255,153,153,0.4)',
                               }}
                               transition={{
                                 type: 'spring',

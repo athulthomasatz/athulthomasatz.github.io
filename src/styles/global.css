@@ -23,7 +23,7 @@
     --surface: #000000;
     --surface-container: #111111;
     --surface-elevated: #1a1a1a;
-    --accent: #00f0ff;
+    --accent: #ff9999;
     --text-primary: #ffffff;
     --text-secondary: #888888;
     --text-tertiary: #555555;
@@ -41,7 +41,7 @@
   }
 
   ::selection {
-    background-color: rgba(0, 240, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.2);
     color: var(--text-primary);
   }
 }

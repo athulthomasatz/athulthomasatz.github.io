@@ -44,7 +44,7 @@ const BlockCard = forwardRef(function BlockCard(
         isSelected
           ? {
               boxShadow:
-                '0 0 20px rgba(0,240,255,0.15), 0 0 40px rgba(0,240,255,0.08), inset 0 1px 0 rgba(0,240,255,0.1)',
+                '0 0 20px rgba(255,153,153,0.15), 0 0 40px rgba(255,153,153,0.08), inset 0 1px 0 rgba(255,153,153,0.1)',
             }
           : {
               boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
@@ -68,7 +68,7 @@ const BlockCard = forwardRef(function BlockCard(
             transition-colors duration-200
             ${isSelected ? 'text-accent' : 'text-white/30'}
           `}
-          style={{ color: isSelected ? '#00f0ff' : '#555555' }}
+          style={{ color: isSelected ? '#ff9999' : '#555555' }}
         >
           <Icon size={15} strokeWidth={1.5} />
         </div>
@@ -98,7 +98,7 @@ const BlockCard = forwardRef(function BlockCard(
               : 'text-white/20 hover:text-white/60 hover:bg-white/5'
           }
         `}
-        style={{ color: isSelected ? '#00f0ff' : '#555555' }}
+        style={{ color: isSelected ? '#ff9999' : '#555555' }}
       >
         <ExternalLink size={14} strokeWidth={1.5} />
       </button>
