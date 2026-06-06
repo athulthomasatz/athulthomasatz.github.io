@@ -168,7 +168,7 @@ export default function Sidebar() {
     [scrollToSection]
   );
 
-  const sidebarWidth = isCollapsed ? '72px' : '260px';
+  const sidebarWidth = isCollapsed ? '72px' : '147px';
 
   return (
     <aside
@@ -200,7 +200,7 @@ export default function Sidebar() {
       </div>
 
       {/* Nav Items */}
-      <nav className="flex-1 py-8 px-3 relative" ref={navRef}>
+      <nav className="flex-1 py-8 px-2 relative" ref={navRef}>
         {/* Vertical Glowing Line */}
         <div
           ref={lineRef}
