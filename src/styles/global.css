@@ -2,6 +2,53 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  scroll-behavior: smooth;
+@layer base {
+  @font-face {
+    font-family: 'Geist';
+    src: url('/fonts/Geist-Variable.woff2') format('woff2');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Geist Mono';
+    src: url('/fonts/GeistMono-Variable.woff2') format('woff2');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  :root {
+    --surface: #12131a;
+    --surface-container: #1a1b22;
+    --accent: #00f0ff;
+    --text-primary: #ffffff;
+    --text-secondary: #a1a1aa;
+    --sidebar-width: 260px;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Geist', system-ui, sans-serif;
+    background-color: var(--surface);
+    color: var(--text-primary);
+  }
+
+  ::selection {
+    background-color: rgba(0, 240, 255, 0.2);
+    color: var(--text-primary);
+  }
+}
+
+@layer utilities {
+  @media (min-width: 768px) {
+    .main-content {
+      margin-left: var(--sidebar-width);
+      transition: margin-left 250ms ease-in-out;
+    }
+  }
 }

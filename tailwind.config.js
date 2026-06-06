@@ -4,8 +4,16 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
+        sans: ['Geist', 'Geist Sans', 'system-ui', 'sans-serif'],
+        mono: ['Geist Mono', 'monospace'],
+      },
+      colors: {
+        surface: '#12131a',
+        'surface-container': '#1a1b22',
+        accent: '#00f0ff',
+      },
+      transitionDuration: {
+        250: '250ms',
       },
     },
   },

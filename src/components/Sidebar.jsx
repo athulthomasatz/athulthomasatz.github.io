@@ -1,0 +1,249 @@
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { motion } from 'framer-motion';
+import {
+  Home,
+  User,
+  Briefcase,
+  Award,
+  Clock,
+  Mail,
+  ChevronsLeft,
+  ChevronsRight,
+} from 'lucide-react';
+
+const NAV_ITEMS = [
+  { id: 'home', label: 'Home', icon: Home },
+  { id: 'about', label: 'About', icon: User },
+  { id: 'projects', label: 'Projects', icon: Briefcase },
+  { id: 'certificates', label: 'Certificates', icon: Award },
+  { id: 'experience', label: 'Experience', icon: Clock },
+  { id: 'contact', label: 'Contact', icon: Mail },
+];
+
+const STORAGE_KEY = 'sidebar-collapsed';
+
+export default function Sidebar() {
+  const [isCollapsed, setIsCollapsed] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return localStorage.getItem(STORAGE_KEY) === 'true';
+  });
+  const [activeSection, setActiveSection] = useState('home');
+  const navRef = useRef(null);
+
+  // Scroll spy with IntersectionObserver
+  useEffect(() => {
+    const sections = NAV_ITEMS.map((item) =>
+      document.getElementById(item.id)
+    ).filter(Boolean);
+
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
+  // Persist collapse state + sync CSS variable for main content margin
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, String(isCollapsed));
+    document.documentElement.style.setProperty(
+      '--sidebar-width',
+      isCollapsed ? '72px' : '260px'
+    );
+  }, [isCollapsed]);
+
+  // Set initial CSS variable on mount
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      '--sidebar-width',
+      isCollapsed ? '72px' : '260px'
+    );
+  }, []);
+
+  const scrollToSection = useCallback((id) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+      setActiveSection(id);
+    }
+  }, []);
+
+  // Keyboard navigation within nav list
+  const handleKeyDown = useCallback(
+    (e, index) => {
+      const items = NAV_ITEMS;
+      let nextIndex = index;
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        nextIndex = (index + 1) % items.length;
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        nextIndex = (index - 1 + items.length) % items.length;
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        nextIndex = 0;
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        nextIndex = items.length - 1;
+      } else if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        scrollToSection(items[index].id);
+        return;
+      }
+
+      if (nextIndex !== index) {
+        const nextEl = navRef.current?.querySelector(
+          `[data-nav-index="${nextIndex}"]`
+        );
+        nextEl?.focus();
+      }
+    },
+    [scrollToSection]
+  );
+
+  const sidebarWidth = isCollapsed ? '72px' : '260px';
+
+  return (
+    <aside
+      className="hidden md:flex flex-col fixed left-0 top-0 h-screen bg-surface-container border-r border-white/5 z-40"
+      style={{
+        width: sidebarWidth,
+        transition: 'width 250ms ease-in-out',
+      }}
+      role="navigation"
+      aria-label="Main navigation"
+    >
+      {/* Logo / Brand */}
+      <div
+        className="flex items-center h-16 px-5 border-b border-white/5 shrink-0 overflow-hidden"
+        style={{ transition: 'padding 250ms ease-in-out' }}
+      >
+        <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center shrink-0">
+          <span className="text-surface font-bold text-sm font-mono">AT</span>
+        </div>
+        <span
+          className={`
+            ml-3 font-semibold text-white whitespace-nowrap overflow-hidden
+            transition-all duration-200 ease-in-out
+            ${isCollapsed ? 'opacity-0 w-0 ml-0' : 'opacity-100 w-auto ml-3'}
+          `}
+        >
+          Athul Thomas
+        </span>
+      </div>
+
+      {/* Nav Items */}
+      <nav className="flex-1 py-6 px-3" ref={navRef}>
+        <ul className="space-y-1" role="menubar">
+          {NAV_ITEMS.map((item, index) => {
+            const Icon = item.icon;
+            const isActive = activeSection === item.id;
+
+            return (
+              <li key={item.id} role="none">
+                <button
+                  data-nav-index={index}
+                  role="link"
+                  aria-current={isActive ? 'page' : undefined}
+                  onClick={() => scrollToSection(item.id)}
+                  onKeyDown={(e) => handleKeyDown(e, index)}
+                  tabIndex={0}
+                  className={`
+                    relative w-full flex items-center rounded-lg px-3 py-3
+                    text-left outline-none
+                    transition-colors duration-200 ease-in-out
+                    focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-0
+                    ${
+                      isActive
+                        ? 'text-white bg-white/5'
+                        : 'hover:text-white hover:bg-white/5'
+                    }
+                  `}
+                  style={{ color: isActive ? '#ffffff' : '#a1a1aa' }}
+                >
+                  {/* Active Indicator Beam */}
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeIndicator"
+                      className="absolute left-0 top-2 bottom-2 w-[3px] rounded-full"
+                      style={{
+                        backgroundColor: '#00f0ff',
+                        boxShadow:
+                          '0 0 8px #00f0ff, 0 0 16px rgba(0,240,255,0.4), 0 0 32px rgba(0,240,255,0.15)',
+                      }}
+                      transition={{
+                        type: 'spring',
+                        stiffness: 380,
+                        damping: 30,
+                      }}
+                    />
+                  )}
+
+                  <Icon
+                    size={20}
+                    strokeWidth={isActive ? 2.5 : 2}
+                    className="shrink-0"
+                  />
+
+                  <span
+                    className={`
+                      whitespace-nowrap overflow-hidden font-medium text-sm
+                      transition-all duration-200 ease-in-out
+                      ${
+                        isCollapsed
+                          ? 'opacity-0 w-0 ml-0'
+                          : 'opacity-100 w-auto ml-3'
+                      }
+                    `}
+                  >
+                    {item.label}
+                  </span>
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+
+      {/* Collapse Toggle */}
+      <div className="p-3 border-t border-white/5 shrink-0">
+        <button
+          onClick={() => setIsCollapsed((c) => !c)}
+          aria-expanded={!isCollapsed}
+          aria-label="Toggle sidebar"
+          className="
+            w-full flex items-center justify-center rounded-lg px-3 py-3
+            hover:bg-white/5
+            transition-colors duration-200 ease-in-out
+            outline-none focus-visible:ring-2 focus-visible:ring-accent/60
+          "
+          style={{ color: '#a1a1aa' }}
+        >
+          <span className="shrink-0 transition-transform duration-200">
+            {isCollapsed ? <ChevronsRight size={18} /> : <ChevronsLeft size={18} />}
+          </span>
+          <span
+            className={`
+              whitespace-nowrap overflow-hidden text-sm font-medium
+              transition-all duration-200 ease-in-out
+              ${isCollapsed ? 'opacity-0 w-0 ml-0' : 'opacity-100 w-auto ml-3'}
+            `}
+          >
+            Collapse
+          </span>
+        </button>
+      </div>
+    </aside>
+  );
+}
