@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Home,
   User,
@@ -21,6 +21,7 @@ const NAV_ITEMS = [
 ];
 
 const STORAGE_KEY = 'sidebar-collapsed';
+const TRAVEL_DURATION = 500;
 
 export default function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(() => {
@@ -30,6 +31,11 @@ export default function Sidebar() {
   const [activeSection, setActiveSection] = useState('home');
   const navRef = useRef(null);
   const lineRef = useRef(null);
+
+  // Orb-to-beam handoff state
+  const [isTraveling, setIsTraveling] = useState(false);
+  const [travelY, setTravelY] = useState({ from: 0, to: 0 });
+  const travelTimeoutRef = useRef(null);
 
   // Scroll spy with IntersectionObserver
   useEffect(() => {
@@ -71,28 +77,47 @@ export default function Sidebar() {
     );
   }, []);
 
-  // Calculate glow orb position based on active item (relative to line container)
-  const [glowY, setGlowY] = useState(0);
   const itemRefs = useRef([]);
 
-  useEffect(() => {
-    const activeIndex = NAV_ITEMS.findIndex((i) => i.id === activeSection);
-    const activeEl = itemRefs.current[activeIndex];
-    const lineEl = lineRef.current;
-    if (activeEl && lineEl) {
-      const lineRect = lineEl.getBoundingClientRect();
-      const itemRect = activeEl.getBoundingClientRect();
-      setGlowY(itemRect.top - lineRect.top + itemRect.height / 2 - 4);
-    }
-  }, [activeSection, isCollapsed]);
+  const scrollToSection = useCallback(
+    (id) => {
+      if (id === activeSection) return;
 
-  const scrollToSection = useCallback((id) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-      setActiveSection(id);
-    }
-  }, []);
+      const targetEl = document.getElementById(id);
+      if (!targetEl) return;
+
+      // Cancel any in-progress travel
+      if (travelTimeoutRef.current) {
+        clearTimeout(travelTimeoutRef.current);
+      }
+
+      // Measure start and end positions relative to line container
+      const fromIndex = NAV_ITEMS.findIndex((i) => i.id === activeSection);
+      const toIndex = NAV_ITEMS.findIndex((i) => i.id === id);
+      const fromEl = itemRefs.current[fromIndex];
+      const toEl = itemRefs.current[toIndex];
+      const lineEl = lineRef.current;
+
+      if (fromEl && toEl && lineEl) {
+        const lineRect = lineEl.getBoundingClientRect();
+        const fromRect = fromEl.getBoundingClientRect();
+        const toRect = toEl.getBoundingClientRect();
+
+        setTravelY({
+          from: fromRect.top - lineRect.top + fromRect.height / 2 - 4,
+          to: toRect.top - lineRect.top + toRect.height / 2 - 4,
+        });
+      }
+
+      setIsTraveling(true);
+      targetEl.scrollIntoView({ behavior: 'smooth' });
+
+      travelTimeoutRef.current = setTimeout(() => {
+        setIsTraveling(false);
+      }, TRAVEL_DURATION);
+    },
+    [activeSection]
+  );
 
   // Keyboard navigation within nav list
   const handleKeyDown = useCallback(
@@ -166,37 +191,47 @@ export default function Sidebar() {
           ref={lineRef}
           className="absolute left-[21px] top-6 bottom-6 w-px bg-white/10 rounded-full"
         >
-          {/* Traveling Glow Orb */}
-          <motion.div
-            className="absolute left-1/2 -translate-x-1/2 w-2 h-2 rounded-full"
-            style={{
-              backgroundColor: '#00f0ff',
-              boxShadow:
-                '0 0 6px 2px #00f0ff, 0 0 12px 4px rgba(0,240,255,0.5), 0 0 24px 8px rgba(0,240,255,0.2)',
-            }}
-            animate={{ top: glowY }}
-            transition={{
-              duration: 0.5,
-              ease: [0.25, 0.1, 0.25, 1],
-            }}
-          />
-          {/* Glow trail segment */}
-          <motion.div
-            className="absolute left-1/2 -translate-x-1/2 w-px rounded-full"
-            style={{
-              background:
-                'linear-gradient(180deg, transparent, #00f0ff 40%, #00f0ff 60%, transparent)',
-            }}
-            animate={{
-              top: glowY - 20,
-              height: 40,
-              opacity: 0.6,
-            }}
-            transition={{
-              duration: 0.5,
-              ease: [0.25, 0.1, 0.25, 1],
-            }}
-          />
+          <AnimatePresence>
+            {isTraveling && (
+              <>
+                {/* Traveling Glow Orb */}
+                <motion.div
+                  key="orb"
+                  initial={{ opacity: 0, scale: 0.5, top: travelY.from }}
+                  animate={{ opacity: 1, scale: 1, top: travelY.to }}
+                  exit={{ opacity: 0, scale: 0.5 }}
+                  transition={{
+                    duration: TRAVEL_DURATION / 1000,
+                    ease: [0.25, 0.1, 0.25, 1],
+                  }}
+                  className="absolute left-1/2 -translate-x-1/2 w-2 h-2 rounded-full"
+                  style={{
+                    backgroundColor: '#00f0ff',
+                    boxShadow:
+                      '0 0 6px 2px #00f0ff, 0 0 12px 4px rgba(0,240,255,0.5), 0 0 24px 8px rgba(0,240,255,0.2)',
+                  }}
+                />
+                {/* Glow trail */}
+                <motion.div
+                  key="trail"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 0.6 }}
+                  exit={{ opacity: 0 }}
+                  transition={{
+                    duration: TRAVEL_DURATION / 1000,
+                    ease: [0.25, 0.1, 0.25, 1],
+                  }}
+                  className="absolute left-1/2 -translate-x-1/2 w-px rounded-full"
+                  style={{
+                    top: travelY.from,
+                    height: Math.abs(travelY.to - travelY.from),
+                    background:
+                      'linear-gradient(180deg, transparent, #00f0ff 20%, #00f0ff 80%, transparent)',
+                  }}
+                />
+              </>
+            )}
+          </AnimatePresence>
         </div>
 
         <ul className="space-y-3" role="menubar">
@@ -227,8 +262,8 @@ export default function Sidebar() {
                   `}
                   style={{ color: isActive ? '#ffffff' : '#a1a1aa' }}
                 >
-                  {/* Active Indicator Beam — static, no travel animation */}
-                  {isActive && (
+                  {/* Active Indicator Beam — only when NOT traveling */}
+                  {isActive && !isTraveling && (
                     <div
                       className="absolute left-0 top-2 bottom-2 w-[3px] rounded-full"
                       style={{
