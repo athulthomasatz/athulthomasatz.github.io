@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { motion } from 'framer-motion';
 import {
   Home,
   User,
@@ -10,6 +9,7 @@ import {
 } from 'lucide-react';
 import BlockCard from './BlockCard';
 import ExpandModal from './ExpandModal';
+import Carousel from './Carousel';
 
 const BLOCKS = [
   { id: 'home', title: 'Home', icon: Home },
@@ -20,15 +20,27 @@ const BLOCKS = [
   { id: 'contact', title: 'Contact', icon: Mail },
 ];
 
+const PROJECTS = [
+  { name: 'Portfolio v2', tech: 'Astro, React, Tailwind', desc: 'Modern dashboard-style portfolio.' },
+  { name: 'Task Manager', tech: 'React, Node.js, MongoDB', desc: 'Full-stack task management app.' },
+  { name: 'API Gateway', tech: 'Express, Redis, Docker', desc: 'Scalable microservices gateway.' },
+];
+
+const CERTIFICATES = [
+  { name: 'AWS Cloud Practitioner', issuer: 'Amazon Web Services', year: '2024' },
+  { name: 'Data Science Professional', issuer: 'DataCamp', year: '2023' },
+  { name: 'React Developer', issuer: 'Meta', year: '2023' },
+];
+
 const PREVIEWS = {
   home: (
-    <div className="space-y-2">
+    <div className="space-y-3">
       <p className="text-white font-medium text-lg">Athul Thomas</p>
       <p className="text-sm">Full-Stack Developer building modern web experiences.</p>
-      <div className="flex gap-2 mt-3">
-        <span className="px-2 py-0.5 rounded-md bg-accent/10 text-accent text-xs font-mono" style={{ color: '#ffffff' }}>React</span>
-        <span className="px-2 py-0.5 rounded-md bg-accent/10 text-accent text-xs font-mono" style={{ color: '#ffffff' }}>Node.js</span>
-        <span className="px-2 py-0.5 rounded-md bg-accent/10 text-accent text-xs font-mono" style={{ color: '#ffffff' }}>TypeScript</span>
+      <div className="flex flex-wrap gap-2 mt-3">
+        <span className="px-2 py-0.5 rounded-md bg-white/10 text-xs font-mono" style={{ color: '#ffffff' }}>React</span>
+        <span className="px-2 py-0.5 rounded-md bg-white/10 text-xs font-mono" style={{ color: '#ffffff' }}>Node.js</span>
+        <span className="px-2 py-0.5 rounded-md bg-white/10 text-xs font-mono" style={{ color: '#ffffff' }}>TypeScript</span>
       </div>
     </div>
   ),
@@ -42,16 +54,28 @@ const PREVIEWS = {
     </div>
   ),
   projects: (
-    <div className="space-y-2">
-      <p>Building high-performance applications with modern tech stacks.</p>
-      <p className="text-xs font-mono text-white/40 mt-2">{`>`} 12+ projects shipped</p>
-    </div>
+    <Carousel
+      items={PROJECTS}
+      renderItem={(item) => (
+        <div className="space-y-1">
+          <p className="text-white font-medium text-sm">{item.name}</p>
+          <p className="text-xs text-white/40 font-mono">{item.tech}</p>
+          <p className="text-xs text-white/60 mt-1">{item.desc}</p>
+        </div>
+      )}
+    />
   ),
   certificates: (
-    <div className="space-y-2">
-      <p>Certified in cloud platforms, data science, and software engineering.</p>
-      <p className="text-xs font-mono text-white/40 mt-2">{`>`} View credentials</p>
-    </div>
+    <Carousel
+      items={CERTIFICATES}
+      renderItem={(item) => (
+        <div className="space-y-1">
+          <p className="text-white font-medium text-sm">{item.name}</p>
+          <p className="text-xs text-white/40 font-mono">{item.issuer}</p>
+          <p className="text-xs text-white/60 mt-1">{item.year}</p>
+        </div>
+      )}
+    />
   ),
   experience: (
     <div className="space-y-2">
@@ -67,7 +91,7 @@ const PREVIEWS = {
   contact: (
     <div className="space-y-2">
       <p>Let's build something amazing together.</p>
-      <p className="text-xs font-mono text-accent mt-2" style={{ color: '#ffffff' }}>athulthomasatz@gmail.com</p>
+      <p className="text-xs font-mono mt-2" style={{ color: '#ffffff' }}>athulthomasatz@gmail.com</p>
     </div>
   ),
 };
@@ -200,7 +224,6 @@ export default function DashboardGrid() {
         setSelectedIndex(nextIndex);
       }
       if (shouldFocus) {
-        // Focus after state update
         setTimeout(() => {
           blockRefs.current[nextIndex]?.focus();
         }, 50);
@@ -227,7 +250,7 @@ export default function DashboardGrid() {
 
   return (
     <>
-      {/* Grid */}
+      {/* Grid — 3 equal columns, 2 rows */}
       <div
         className="
           grid gap-4 md:gap-5 lg:gap-6
@@ -240,15 +263,11 @@ export default function DashboardGrid() {
       >
         {BLOCKS.map((block, index) => {
           const isHome = block.id === 'home';
-          const isContact = block.id === 'contact';
 
           return (
             <div
               key={block.id}
-              className={`
-                ${isHome ? 'md:col-span-2 lg:col-span-2' : ''}
-                ${isContact ? 'md:col-span-2 lg:col-span-3' : ''}
-              `}
+              className={isHome ? 'min-h-[260px]' : ''}
             >
               <BlockCard
                 ref={(el) => { blockRefs.current[index] = el; }}
