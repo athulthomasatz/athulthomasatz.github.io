@@ -199,11 +199,11 @@ export default function Sidebar() {
       </div>
 
       {/* Nav Items */}
-      <nav className="flex-1 py-6 px-3 relative" ref={navRef}>
+      <nav className="flex-1 py-8 px-3 relative" ref={navRef}>
         {/* Vertical Glowing Line */}
         <div
           ref={lineRef}
-          className="absolute left-[21px] top-6 bottom-6 w-px bg-white/10 rounded-full"
+          className="absolute left-[21px] top-8 bottom-8 w-px bg-white/10 rounded-full"
         >
           {/* Beam indicator at active section — on the line */}
           {!isTraveling && (
@@ -262,7 +262,7 @@ export default function Sidebar() {
           </AnimatePresence>
         </div>
 
-        <ul className="space-y-3" role="menubar">
+        <ul className="space-y-7" role="menubar">
           {NAV_ITEMS.map((item, index) => {
             const Icon = item.icon;
             const isActive = activeSection === item.id;
