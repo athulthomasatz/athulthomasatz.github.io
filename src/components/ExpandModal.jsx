@@ -120,7 +120,7 @@ export default function ExpandModal({ isOpen, onClose, title, icon: Icon, childr
               <div className="flex items-center gap-3">
                 {Icon && (
                   <div className="w-8 h-8 rounded-lg bg-accent/15 flex items-center justify-center">
-                    <Icon size={16} className="text-accent" style={{ color: '#ff9999' }} />
+                    <Icon size={16} className="text-accent" style={{ color: '#ffffff' }} />
                   </div>
                 )}
                 <h2

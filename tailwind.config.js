@@ -11,7 +11,7 @@ export default {
         surface: '#000000',
         'surface-container': '#111111',
         'surface-elevated': '#1a1a1a',
-        accent: '#ff9999',
+        accent: '#ffffff',
         'text-secondary': '#888888',
         'text-tertiary': '#555555',
       },

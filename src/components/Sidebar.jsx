@@ -208,7 +208,7 @@ export default function Sidebar() {
                 style={{
                   backgroundColor: '#ffffff',
                   boxShadow:
-                    '0 0 8px #c8f0f3, 0 0 16px rgba(255,153,153,0.4), 0 0 32px rgba(255,153,153,0.15)',
+                    '0 0 8px #c8f0f3, 0 0 16px rgba(255,255,255,0.4), 0 0 32px rgba(255,255,255,0.15)',
                   transformOrigin: 'center',
                 }}
               />
@@ -230,7 +230,7 @@ export default function Sidebar() {
                 style={{
                   backgroundColor: '#ffffff',
                   boxShadow:
-                    '0 0 8px 3px #ff9999, 0 0 16px 6px rgba(255,153,153,0.5), 0 0 32px 12px rgba(255,153,153,0.25)',
+                    '0 0 8px 3px #ffffff, 0 0 16px 6px rgba(255,255,255,0.5), 0 0 32px 12px rgba(255,255,255,0.25)',
                 }}
               />
             )}

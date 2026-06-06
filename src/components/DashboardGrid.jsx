@@ -26,9 +26,9 @@ const PREVIEWS = {
       <p className="text-white font-medium text-lg">Athul Thomas</p>
       <p className="text-sm">Full-Stack Developer building modern web experiences.</p>
       <div className="flex gap-2 mt-3">
-        <span className="px-2 py-0.5 rounded-md bg-accent/10 text-accent text-xs font-mono" style={{ color: '#ff9999' }}>React</span>
-        <span className="px-2 py-0.5 rounded-md bg-accent/10 text-accent text-xs font-mono" style={{ color: '#ff9999' }}>Node.js</span>
-        <span className="px-2 py-0.5 rounded-md bg-accent/10 text-accent text-xs font-mono" style={{ color: '#ff9999' }}>TypeScript</span>
+        <span className="px-2 py-0.5 rounded-md bg-accent/10 text-accent text-xs font-mono" style={{ color: '#ffffff' }}>React</span>
+        <span className="px-2 py-0.5 rounded-md bg-accent/10 text-accent text-xs font-mono" style={{ color: '#ffffff' }}>Node.js</span>
+        <span className="px-2 py-0.5 rounded-md bg-accent/10 text-accent text-xs font-mono" style={{ color: '#ffffff' }}>TypeScript</span>
       </div>
     </div>
   ),
@@ -67,7 +67,7 @@ const PREVIEWS = {
   contact: (
     <div className="space-y-2">
       <p>Let's build something amazing together.</p>
-      <p className="text-xs font-mono text-accent mt-2" style={{ color: '#ff9999' }}>athulthomasatz@gmail.com</p>
+      <p className="text-xs font-mono text-accent mt-2" style={{ color: '#ffffff' }}>athulthomasatz@gmail.com</p>
     </div>
   ),
 };
