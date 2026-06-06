@@ -70,6 +70,21 @@ export default function Sidebar() {
     );
   }, []);
 
+  // Calculate glow orb position based on active item
+  const [glowY, setGlowY] = useState(0);
+  const itemRefs = useRef([]);
+
+  useEffect(() => {
+    const activeIndex = NAV_ITEMS.findIndex((i) => i.id === activeSection);
+    const activeEl = itemRefs.current[activeIndex];
+    const navEl = navRef.current;
+    if (activeEl && navEl) {
+      const navRect = navEl.getBoundingClientRect();
+      const itemRect = activeEl.getBoundingClientRect();
+      setGlowY(itemRect.top - navRect.top + itemRect.height / 2);
+    }
+  }, [activeSection, isCollapsed]);
+
   const scrollToSection = useCallback((id) => {
     const el = document.getElementById(id);
     if (el) {
@@ -144,8 +159,44 @@ export default function Sidebar() {
       </div>
 
       {/* Nav Items */}
-      <nav className="flex-1 py-6 px-3" ref={navRef}>
-        <ul className="space-y-1" role="menubar">
+      <nav className="flex-1 py-6 px-3 relative" ref={navRef}>
+        {/* Vertical Glowing Line */}
+        <div className="absolute left-[21px] top-6 bottom-6 w-px bg-white/10 rounded-full">
+          {/* Traveling Glow Orb */}
+          <motion.div
+            className="absolute left-1/2 -translate-x-1/2 w-2 h-2 rounded-full"
+            style={{
+              backgroundColor: '#00f0ff',
+              boxShadow:
+                '0 0 6px 2px #00f0ff, 0 0 12px 4px rgba(0,240,255,0.5), 0 0 24px 8px rgba(0,240,255,0.2)',
+            }}
+            animate={{ top: glowY - 4 }}
+            transition={{
+              type: 'spring',
+              stiffness: 300,
+              damping: 25,
+            }}
+          />
+          {/* Glow trail segment */}
+          <motion.div
+            className="absolute left-1/2 -translate-x-1/2 w-px rounded-full"
+            style={{
+              background: 'linear-gradient(180deg, transparent, #00f0ff 40%, #00f0ff 60%, transparent)',
+            }}
+            animate={{
+              top: glowY - 24,
+              height: 48,
+              opacity: 0.6,
+            }}
+            transition={{
+              type: 'spring',
+              stiffness: 300,
+              damping: 25,
+            }}
+          />
+        </div>
+
+        <ul className="space-y-3" role="menubar">
           {NAV_ITEMS.map((item, index) => {
             const Icon = item.icon;
             const isActive = activeSection === item.id;
@@ -153,6 +204,7 @@ export default function Sidebar() {
             return (
               <li key={item.id} role="none">
                 <button
+                  ref={(el) => { itemRefs.current[index] = el; }}
                   data-nav-index={index}
                   role="link"
                   aria-current={isActive ? 'page' : undefined}
