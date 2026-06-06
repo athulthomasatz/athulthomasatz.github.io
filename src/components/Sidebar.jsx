@@ -29,6 +29,7 @@ export default function Sidebar() {
   });
   const [activeSection, setActiveSection] = useState('home');
   const navRef = useRef(null);
+  const lineRef = useRef(null);
 
   // Scroll spy with IntersectionObserver
   useEffect(() => {
@@ -70,18 +71,18 @@ export default function Sidebar() {
     );
   }, []);
 
-  // Calculate glow orb position based on active item
+  // Calculate glow orb position based on active item (relative to line container)
   const [glowY, setGlowY] = useState(0);
   const itemRefs = useRef([]);
 
   useEffect(() => {
     const activeIndex = NAV_ITEMS.findIndex((i) => i.id === activeSection);
     const activeEl = itemRefs.current[activeIndex];
-    const navEl = navRef.current;
-    if (activeEl && navEl) {
-      const navRect = navEl.getBoundingClientRect();
+    const lineEl = lineRef.current;
+    if (activeEl && lineEl) {
+      const lineRect = lineEl.getBoundingClientRect();
       const itemRect = activeEl.getBoundingClientRect();
-      setGlowY(itemRect.top - navRect.top + itemRect.height / 2);
+      setGlowY(itemRect.top - lineRect.top + itemRect.height / 2 - 4);
     }
   }, [activeSection, isCollapsed]);
 
@@ -161,7 +162,10 @@ export default function Sidebar() {
       {/* Nav Items */}
       <nav className="flex-1 py-6 px-3 relative" ref={navRef}>
         {/* Vertical Glowing Line */}
-        <div className="absolute left-[21px] top-6 bottom-6 w-px bg-white/10 rounded-full">
+        <div
+          ref={lineRef}
+          className="absolute left-[21px] top-6 bottom-6 w-px bg-white/10 rounded-full"
+        >
           {/* Traveling Glow Orb */}
           <motion.div
             className="absolute left-1/2 -translate-x-1/2 w-2 h-2 rounded-full"
@@ -170,28 +174,27 @@ export default function Sidebar() {
               boxShadow:
                 '0 0 6px 2px #00f0ff, 0 0 12px 4px rgba(0,240,255,0.5), 0 0 24px 8px rgba(0,240,255,0.2)',
             }}
-            animate={{ top: glowY - 4 }}
+            animate={{ top: glowY }}
             transition={{
-              type: 'spring',
-              stiffness: 300,
-              damping: 25,
+              duration: 0.5,
+              ease: [0.25, 0.1, 0.25, 1],
             }}
           />
           {/* Glow trail segment */}
           <motion.div
             className="absolute left-1/2 -translate-x-1/2 w-px rounded-full"
             style={{
-              background: 'linear-gradient(180deg, transparent, #00f0ff 40%, #00f0ff 60%, transparent)',
+              background:
+                'linear-gradient(180deg, transparent, #00f0ff 40%, #00f0ff 60%, transparent)',
             }}
             animate={{
-              top: glowY - 24,
-              height: 48,
+              top: glowY - 20,
+              height: 40,
               opacity: 0.6,
             }}
             transition={{
-              type: 'spring',
-              stiffness: 300,
-              damping: 25,
+              duration: 0.5,
+              ease: [0.25, 0.1, 0.25, 1],
             }}
           />
         </div>
@@ -224,20 +227,14 @@ export default function Sidebar() {
                   `}
                   style={{ color: isActive ? '#ffffff' : '#a1a1aa' }}
                 >
-                  {/* Active Indicator Beam */}
+                  {/* Active Indicator Beam — static, no travel animation */}
                   {isActive && (
-                    <motion.div
-                      layoutId="activeIndicator"
+                    <div
                       className="absolute left-0 top-2 bottom-2 w-[3px] rounded-full"
                       style={{
                         backgroundColor: '#00f0ff',
                         boxShadow:
                           '0 0 8px #00f0ff, 0 0 16px rgba(0,240,255,0.4), 0 0 32px rgba(0,240,255,0.15)',
-                      }}
-                      transition={{
-                        type: 'spring',
-                        stiffness: 380,
-                        damping: 30,
                       }}
                     />
                   )}
