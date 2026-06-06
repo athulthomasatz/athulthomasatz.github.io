@@ -204,7 +204,7 @@ export default function Sidebar() {
         {/* Vertical Glowing Line */}
         <div
           ref={lineRef}
-          className="absolute left-[21px] top-8 bottom-8 w-px bg-white/10 rounded-full"
+          className="absolute left-[0px] top-8 bottom-8 w-px bg-white/10 rounded-full"
         >
           {/* Beam indicator at active section — on the line */}
           {!isTraveling && beamY > 0 && (
@@ -242,7 +242,7 @@ export default function Sidebar() {
                   duration: TRAVEL_DURATION / 1000,
                   ease: [0.22, 1, 0.36, 1],
                 }}
-                className="absolute left-1/2 -translate-x-1/2 w-2.5 h-2.5 rounded-full"
+                className="absolute left-1/2 -translate-x-1/2 -ml-1 w-2.5 h-2.5 rounded-full"
                 style={{
                   backgroundColor: '#00f0ff',
                   boxShadow:
