@@ -11,6 +11,7 @@ export default {
         surface: '#12131a',
         'surface-container': '#1a1b22',
         accent: '#00f0ff',
+        'text-secondary': '#a1a1aa',
       },
       transitionDuration: {
         250: '250ms',

@@ -27,36 +27,20 @@ export default function MobileDrawer() {
   const hamburgerRef = useRef(null);
   const lastFocusedRef = useRef(null);
 
-  // Scroll spy
+  // Listen for block-select from dashboard grid
   useEffect(() => {
-    const sections = NAV_ITEMS.map((item) =>
-      document.getElementById(item.id)
-    ).filter(Boolean);
-    if (sections.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { threshold: 0.4 }
-    );
-
-    sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
+    const handleBlockSelect = (e) => {
+      setActiveSection(e.detail);
+    };
+    window.addEventListener('block-select', handleBlockSelect);
+    return () => window.removeEventListener('block-select', handleBlockSelect);
   }, []);
 
   const scrollToSection = useCallback(
     (id) => {
-      const el = document.getElementById(id);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-        setActiveSection(id);
-        setIsOpen(false);
-      }
+      window.dispatchEvent(new CustomEvent('block-select', { detail: id }));
+      setActiveSection(id);
+      setIsOpen(false);
     },
     []
   );

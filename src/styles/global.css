@@ -25,11 +25,11 @@
     --accent: #00f0ff;
     --text-primary: #ffffff;
     --text-secondary: #a1a1aa;
-    --sidebar-width: 260px;
+    --sidebar-width: 200px;
   }
 
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
   }
 
   body {

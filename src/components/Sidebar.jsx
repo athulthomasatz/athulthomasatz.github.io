@@ -38,27 +38,13 @@ export default function Sidebar() {
   const [travelY, setTravelY] = useState({ from: 0, to: 0 });
   const travelTimeoutRef = useRef(null);
 
-  // Scroll spy with IntersectionObserver
+  // Listen for block-select from dashboard grid
   useEffect(() => {
-    const sections = NAV_ITEMS.map((item) =>
-      document.getElementById(item.id)
-    ).filter(Boolean);
-
-    if (sections.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { threshold: 0.4 }
-    );
-
-    sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
+    const handleBlockSelect = (e) => {
+      setActiveSection(e.detail);
+    };
+    window.addEventListener('block-select', handleBlockSelect);
+    return () => window.removeEventListener('block-select', handleBlockSelect);
   }, []);
 
   // Persist collapse state + sync CSS variable for main content margin
@@ -66,7 +52,7 @@ export default function Sidebar() {
     localStorage.setItem(STORAGE_KEY, String(isCollapsed));
     document.documentElement.style.setProperty(
       '--sidebar-width',
-      isCollapsed ? '72px' : '260px'
+      isCollapsed ? '72px' : '200px'
     );
   }, [isCollapsed]);
 
@@ -74,7 +60,7 @@ export default function Sidebar() {
   useEffect(() => {
     document.documentElement.style.setProperty(
       '--sidebar-width',
-      isCollapsed ? '72px' : '260px'
+      isCollapsed ? '72px' : '200px'
     );
   }, []);
 
@@ -97,9 +83,6 @@ export default function Sidebar() {
   const scrollToSection = useCallback(
     (id) => {
       if (id === activeSection) return;
-
-      const targetEl = document.getElementById(id);
-      if (!targetEl) return;
 
       // Cancel any in-progress travel
       if (travelTimeoutRef.current) {
@@ -125,7 +108,8 @@ export default function Sidebar() {
       }
 
       setIsTraveling(true);
-      targetEl.scrollIntoView({ behavior: 'smooth' });
+      // Emit block-select event for DashboardGrid
+      window.dispatchEvent(new CustomEvent('block-select', { detail: id }));
 
       travelTimeoutRef.current = setTimeout(() => {
         setIsTraveling(false);
@@ -168,7 +152,7 @@ export default function Sidebar() {
     [scrollToSection]
   );
 
-  const sidebarWidth = isCollapsed ? '72px' : '147px';
+  const sidebarWidth = isCollapsed ? '72px' : '200px';
 
   return (
     <aside
