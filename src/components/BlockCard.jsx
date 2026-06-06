@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import { motion } from 'framer-motion';
-import { Maximize2 } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 
 const BlockCard = forwardRef(function BlockCard(
   { id, title, icon: Icon, index, isSelected, onSelect, onExpand, children, className = '' },
@@ -30,13 +30,13 @@ const BlockCard = forwardRef(function BlockCard(
         ease: [0.22, 1, 0.36, 1],
       }}
       className={`
-        relative rounded-xl border p-6 outline-none
+        relative rounded-xl border p-5 outline-none
         transition-colors duration-200
         focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-0
         ${
           isSelected
-            ? 'border-accent/50 bg-surface-container/80'
-            : 'border-white/10 bg-surface-container hover:border-white/20'
+            ? 'border-accent/50 bg-surface-elevated/80'
+            : 'border-white/10 bg-surface-elevated hover:border-white/20'
         }
         ${className}
       `}
@@ -47,62 +47,61 @@ const BlockCard = forwardRef(function BlockCard(
                 '0 0 20px rgba(0,240,255,0.15), 0 0 40px rgba(0,240,255,0.08), inset 0 1px 0 rgba(0,240,255,0.1)',
             }
           : {
-              boxShadow: '0 4px 24px rgba(0,0,0,0.2)',
+              boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
             }
       }
     >
-      {/* Header */}
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-3">
-          <div
-            className={`
-              w-9 h-9 rounded-lg flex items-center justify-center shrink-0
-              transition-colors duration-200
-              ${isSelected ? 'bg-accent/15 text-accent' : 'bg-white/5 text-text-secondary'}
-            `}
-            style={{ color: isSelected ? '#00f0ff' : '#a1a1aa' }}
-          >
-            <Icon size={18} strokeWidth={isSelected ? 2.5 : 2} />
-          </div>
-          <h3
-            className={`
-              font-semibold text-base tracking-tight
-              transition-colors duration-200
-              ${isSelected ? 'text-white' : 'text-white/90'}
-            `}
-          >
-            {title}
-          </h3>
-        </div>
-
-        {/* Expand Button */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onExpand(index);
-          }}
-          aria-label={`Expand ${title}`}
-          aria-expanded={false}
-          className={`
-            w-8 h-8 rounded-lg flex items-center justify-center
-            transition-all duration-200 outline-none
-            focus-visible:ring-2 focus-visible:ring-accent/60
-            ${
-              isSelected
-                ? 'text-accent hover:bg-accent/10'
-                : 'text-text-secondary hover:text-white hover:bg-white/5'
-            }
-          `}
-          style={{ color: isSelected ? '#00f0ff' : '#a1a1aa' }}
+      {/* Header: UPPERCASE title left, category icon right */}
+      <div className="flex items-center justify-between mb-5">
+        <h3
+          className="
+            text-xs font-mono font-medium tracking-[0.15em] uppercase
+            text-white/50
+          "
         >
-          <Maximize2 size={15} />
-        </button>
+          {title}
+        </h3>
+
+        <div
+          className={`
+            w-7 h-7 rounded-md flex items-center justify-center shrink-0
+            transition-colors duration-200
+            ${isSelected ? 'text-accent' : 'text-white/30'}
+          `}
+          style={{ color: isSelected ? '#00f0ff' : '#555555' }}
+        >
+          <Icon size={15} strokeWidth={1.5} />
+        </div>
       </div>
 
       {/* Content */}
       <div className="text-sm text-text-secondary leading-relaxed">
         {children}
       </div>
+
+      {/* Expand button — bottom right, external link style */}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          onExpand(index);
+        }}
+        aria-label={`Expand ${title}`}
+        aria-expanded={false}
+        className={`
+          absolute bottom-4 right-4
+          w-7 h-7 rounded-md flex items-center justify-center
+          transition-all duration-200 outline-none
+          focus-visible:ring-2 focus-visible:ring-accent/60
+          ${
+            isSelected
+              ? 'text-accent hover:bg-accent/10'
+              : 'text-white/20 hover:text-white/60 hover:bg-white/5'
+          }
+        `}
+        style={{ color: isSelected ? '#00f0ff' : '#555555' }}
+      >
+        <ExternalLink size={14} strokeWidth={1.5} />
+      </button>
     </motion.div>
   );
 });

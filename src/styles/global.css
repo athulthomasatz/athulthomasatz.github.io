@@ -20,11 +20,13 @@
   }
 
   :root {
-    --surface: #12131a;
-    --surface-container: #1a1b22;
+    --surface: #000000;
+    --surface-container: #111111;
+    --surface-elevated: #1a1a1a;
     --accent: #00f0ff;
     --text-primary: #ffffff;
-    --text-secondary: #a1a1aa;
+    --text-secondary: #888888;
+    --text-tertiary: #555555;
     --sidebar-width: 200px;
   }
 
