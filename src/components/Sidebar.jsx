@@ -21,7 +21,8 @@ const NAV_ITEMS = [
 ];
 
 const STORAGE_KEY = 'sidebar-collapsed';
-const TRAVEL_DURATION = 500;
+const TRAVEL_DURATION = 600; // orb travel time before exit begins
+const EXIT_DURATION = 300;  // orb exit + beam entrance overlap
 
 export default function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(() => {
@@ -206,58 +207,48 @@ export default function Sidebar() {
           className="absolute left-[21px] top-8 bottom-8 w-px bg-white/10 rounded-full"
         >
           {/* Beam indicator at active section — on the line */}
-          {!isTraveling && (
+          {!isTraveling && beamY > 0 && (
             <div
-              className="absolute left-1/2 -translate-x-1/2 w-[3px] rounded-full"
-              style={{
-                top: beamY - 18,
-                height: 36,
-                backgroundColor: '#00f0ff',
-                boxShadow:
-                  '0 0 8px #00f0ff, 0 0 16px rgba(0,240,255,0.4), 0 0 32px rgba(0,240,255,0.15)',
-              }}
-            />
+              className="absolute left-1/2 -translate-x-1/2"
+              style={{ top: beamY - 18 }}
+            >
+              <motion.div
+                initial={{ scaleY: 0.5, opacity: 0 }}
+                animate={{ scaleY: 1, opacity: 1 }}
+                transition={{
+                  duration: EXIT_DURATION / 1000,
+                  delay: 0.05,
+                  ease: 'easeOut',
+                }}
+                className="w-[3px] h-9 rounded-full"
+                style={{
+                  backgroundColor: '#00f0ff',
+                  boxShadow:
+                    '0 0 8px #00f0ff, 0 0 16px rgba(0,240,255,0.4), 0 0 32px rgba(0,240,255,0.15)',
+                  transformOrigin: 'center',
+                }}
+              />
+            </div>
           )}
 
           <AnimatePresence>
             {isTraveling && (
-              <>
-                {/* Traveling Glow Orb */}
-                <motion.div
-                  key="orb"
-                  initial={{ opacity: 0, scale: 0.5, top: travelY.from }}
-                  animate={{ opacity: 1, scale: 1, top: travelY.to }}
-                  exit={{ opacity: 0, scale: 0.5 }}
-                  transition={{
-                    duration: TRAVEL_DURATION / 1000,
-                    ease: [0.25, 0.1, 0.25, 1],
-                  }}
-                  className="absolute left-1/2 -translate-x-1/2 w-2 h-2 rounded-full"
-                  style={{
-                    backgroundColor: '#00f0ff',
-                    boxShadow:
-                      '0 0 6px 2px #00f0ff, 0 0 12px 4px rgba(0,240,255,0.5), 0 0 24px 8px rgba(0,240,255,0.2)',
-                  }}
-                />
-                {/* Glow trail */}
-                <motion.div
-                  key="trail"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 0.6 }}
-                  exit={{ opacity: 0 }}
-                  transition={{
-                    duration: TRAVEL_DURATION / 1000,
-                    ease: [0.25, 0.1, 0.25, 1],
-                  }}
-                  className="absolute left-1/2 -translate-x-1/2 w-px rounded-full"
-                  style={{
-                    top: travelY.from,
-                    height: Math.abs(travelY.to - travelY.from),
-                    background:
-                      'linear-gradient(180deg, transparent, #00f0ff 20%, #00f0ff 80%, transparent)',
-                  }}
-                />
-              </>
+              <motion.div
+                key="orb"
+                initial={{ opacity: 0, scale: 0.5, top: travelY.from }}
+                animate={{ opacity: 1, scale: 1, top: travelY.to }}
+                exit={{ opacity: 0, scale: 0.3 }}
+                transition={{
+                  duration: TRAVEL_DURATION / 1000,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="absolute left-1/2 -translate-x-1/2 w-2.5 h-2.5 rounded-full"
+                style={{
+                  backgroundColor: '#00f0ff',
+                  boxShadow:
+                    '0 0 8px 3px #00f0ff, 0 0 16px 6px rgba(0,240,255,0.5), 0 0 32px 12px rgba(0,240,255,0.25)',
+                }}
+              />
             )}
           </AnimatePresence>
         </div>
