@@ -46,7 +46,7 @@
   }
 }
 
-@layer utilities {
+@layer base {
   @media (min-width: 768px) {
     .main-content {
       margin-left: var(--sidebar-width);

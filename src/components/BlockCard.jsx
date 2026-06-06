@@ -22,15 +22,14 @@ const BlockCard = forwardRef(function BlockCard(
         }
       }}
       animate={{
-        scale: isSelected ? 1.02 : 1,
         y: isSelected ? -4 : 0,
       }}
       transition={{
-        duration: 0.3,
+        duration: 0.25,
         ease: [0.22, 1, 0.36, 1],
       }}
       className={`
-        relative rounded-xl border p-5 outline-none
+        relative rounded-xl border p-5 outline-none overflow-visible
         transition-colors duration-200
         focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-0
         ${
