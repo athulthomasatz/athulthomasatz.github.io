@@ -79,6 +79,20 @@ export default function Sidebar() {
 
   const itemRefs = useRef([]);
 
+  // Calculate beam position on the vertical line (relative to line container)
+  const [beamY, setBeamY] = useState(0);
+
+  useEffect(() => {
+    const activeIndex = NAV_ITEMS.findIndex((i) => i.id === activeSection);
+    const activeEl = itemRefs.current[activeIndex];
+    const lineEl = lineRef.current;
+    if (activeEl && lineEl) {
+      const lineRect = lineEl.getBoundingClientRect();
+      const itemRect = activeEl.getBoundingClientRect();
+      setBeamY(itemRect.top - lineRect.top + itemRect.height / 2);
+    }
+  }, [activeSection, isCollapsed]);
+
   const scrollToSection = useCallback(
     (id) => {
       if (id === activeSection) return;
@@ -191,6 +205,20 @@ export default function Sidebar() {
           ref={lineRef}
           className="absolute left-[21px] top-6 bottom-6 w-px bg-white/10 rounded-full"
         >
+          {/* Beam indicator at active section — on the line */}
+          {!isTraveling && (
+            <div
+              className="absolute left-1/2 -translate-x-1/2 w-[3px] rounded-full"
+              style={{
+                top: beamY - 18,
+                height: 36,
+                backgroundColor: '#00f0ff',
+                boxShadow:
+                  '0 0 8px #00f0ff, 0 0 16px rgba(0,240,255,0.4), 0 0 32px rgba(0,240,255,0.15)',
+              }}
+            />
+          )}
+
           <AnimatePresence>
             {isTraveling && (
               <>
@@ -262,18 +290,6 @@ export default function Sidebar() {
                   `}
                   style={{ color: isActive ? '#ffffff' : '#a1a1aa' }}
                 >
-                  {/* Active Indicator Beam — only when NOT traveling */}
-                  {isActive && !isTraveling && (
-                    <div
-                      className="absolute left-0 top-2 bottom-2 w-[3px] rounded-full"
-                      style={{
-                        backgroundColor: '#00f0ff',
-                        boxShadow:
-                          '0 0 8px #00f0ff, 0 0 16px rgba(0,240,255,0.4), 0 0 32px rgba(0,240,255,0.15)',
-                      }}
-                    />
-                  )}
-
                   <Icon
                     size={20}
                     strokeWidth={isActive ? 2.5 : 2}
