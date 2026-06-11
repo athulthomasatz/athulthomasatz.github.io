@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
 
 const BlockCard = forwardRef(function BlockCard(
-  { id, title, icon: Icon, index, isSelected, onSelect, onExpand, children, className = '' },
+  { id, title, icon: Icon, index, isSelected, onSelect, onExpand, children, className = '', badge = null },
   ref
 ) {
   return (
@@ -29,8 +29,8 @@ const BlockCard = forwardRef(function BlockCard(
         ease: [0.22, 1, 0.36, 1],
       }}
       className={`
-        relative rounded-xl border p-5 outline-none overflow-visible
-        transition-colors duration-200
+        relative rounded-xl border p-3 lg:p-4 outline-none overflow-hidden
+        transition-colors duration-200 flex flex-col
         focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-0
         ${
           isSelected
@@ -50,8 +50,8 @@ const BlockCard = forwardRef(function BlockCard(
             }
       }
     >
-      {/* Header: UPPERCASE title left, category icon right */}
-      <div className="flex items-center justify-between mb-5">
+      {/* Header: UPPERCASE title left, badge center (if any), category icon right */}
+      <div className="flex items-center justify-between mb-2 lg:mb-3">
         <h3
           className="
             text-xs font-mono font-medium tracking-[0.15em] uppercase
@@ -61,20 +61,27 @@ const BlockCard = forwardRef(function BlockCard(
           {title}
         </h3>
 
-        <div
-          className={`
-            w-7 h-7 rounded-md flex items-center justify-center shrink-0
-            transition-colors duration-200
-            ${isSelected ? 'text-accent' : 'text-white/30'}
-          `}
-          style={{ color: isSelected ? '#ffffff' : '#555555' }}
-        >
-          <Icon size={15} strokeWidth={1.5} />
+        <div className="flex items-center gap-2">
+          {badge && (
+            <span className="px-2 py-0.5 rounded border border-white/20 text-[10px] font-mono tracking-wider uppercase text-white/70">
+              {badge}
+            </span>
+          )}
+          <div
+            className={`
+              w-7 h-7 rounded-md flex items-center justify-center shrink-0
+              transition-colors duration-200
+              ${isSelected ? 'text-accent' : 'text-white/30'}
+            `}
+            style={{ color: isSelected ? '#ffffff' : '#555555' }}
+          >
+            <Icon size={15} strokeWidth={1.5} />
+          </div>
         </div>
       </div>
 
       {/* Content */}
-      <div className="text-sm text-text-secondary leading-relaxed">
+      <div className="text-sm text-text-secondary leading-relaxed flex-1 flex flex-col min-h-0">
         {children}
       </div>
 

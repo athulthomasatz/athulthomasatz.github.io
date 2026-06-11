@@ -20,14 +20,14 @@
   }
 
   :root {
-    --surface: #000000;
+    --surface: #0a0a0a;
     --surface-container: #111111;
     --surface-elevated: #1a1a1a;
     --accent: #ffffff;
     --text-primary: #ffffff;
     --text-secondary: #888888;
     --text-tertiary: #555555;
-    --sidebar-width: 200px;
+    --sidebar-width: 220px;
   }
 
   html {
@@ -38,6 +38,8 @@
     font-family: 'Geist', system-ui, sans-serif;
     background-color: var(--surface);
     color: var(--text-primary);
+    overflow: hidden;
+    height: 100vh;
   }
 
   ::selection {

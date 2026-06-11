@@ -4,9 +4,7 @@ import {
   Home,
   User,
   Briefcase,
-  Award,
   Clock,
-  Mail,
   ChevronsLeft,
   ChevronsRight,
 } from 'lucide-react';
@@ -15,14 +13,12 @@ const NAV_ITEMS = [
   { id: 'home', label: 'Home', icon: Home },
   { id: 'about', label: 'About', icon: User },
   { id: 'projects', label: 'Projects', icon: Briefcase },
-  { id: 'certificates', label: 'Certificates', icon: Award },
   { id: 'experience', label: 'Experience', icon: Clock },
-  { id: 'contact', label: 'Contact', icon: Mail },
 ];
 
 const STORAGE_KEY = 'sidebar-collapsed';
-const TRAVEL_DURATION = 600; // orb travel time before exit begins
-const EXIT_DURATION = 300;  // orb exit + beam entrance overlap
+const TRAVEL_DURATION = 600;
+const EXIT_DURATION = 300;
 
 export default function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(() => {
@@ -33,12 +29,10 @@ export default function Sidebar() {
   const navRef = useRef(null);
   const lineRef = useRef(null);
 
-  // Orb-to-beam handoff state
   const [isTraveling, setIsTraveling] = useState(false);
   const [travelY, setTravelY] = useState({ from: 0, to: 0 });
   const travelTimeoutRef = useRef(null);
 
-  // Listen for block-select from dashboard grid
   useEffect(() => {
     const handleBlockSelect = (e) => {
       setActiveSection(e.detail);
@@ -47,26 +41,22 @@ export default function Sidebar() {
     return () => window.removeEventListener('block-select', handleBlockSelect);
   }, []);
 
-  // Persist collapse state + sync CSS variable for main content margin
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, String(isCollapsed));
     document.documentElement.style.setProperty(
       '--sidebar-width',
-      isCollapsed ? '72px' : '200px'
+      isCollapsed ? '72px' : '220px'
     );
   }, [isCollapsed]);
 
-  // Set initial CSS variable on mount
   useEffect(() => {
     document.documentElement.style.setProperty(
       '--sidebar-width',
-      isCollapsed ? '72px' : '200px'
+      isCollapsed ? '72px' : '220px'
     );
   }, []);
 
   const itemRefs = useRef([]);
-
-  // Calculate beam position on the vertical line (relative to line container)
   const [beamY, setBeamY] = useState(0);
 
   useEffect(() => {
@@ -84,12 +74,10 @@ export default function Sidebar() {
     (id) => {
       if (id === activeSection) return;
 
-      // Cancel any in-progress travel
       if (travelTimeoutRef.current) {
         clearTimeout(travelTimeoutRef.current);
       }
 
-      // Measure start and end positions relative to line container
       const fromIndex = NAV_ITEMS.findIndex((i) => i.id === activeSection);
       const toIndex = NAV_ITEMS.findIndex((i) => i.id === id);
       const fromEl = itemRefs.current[fromIndex];
@@ -108,7 +96,6 @@ export default function Sidebar() {
       }
 
       setIsTraveling(true);
-      // Emit block-select event for DashboardGrid
       window.dispatchEvent(new CustomEvent('block-select', { detail: id }));
 
       travelTimeoutRef.current = setTimeout(() => {
@@ -118,7 +105,6 @@ export default function Sidebar() {
     [activeSection]
   );
 
-  // Keyboard navigation within nav list
   const handleKeyDown = useCallback(
     (e, index) => {
       const items = NAV_ITEMS;
@@ -152,7 +138,7 @@ export default function Sidebar() {
     [scrollToSection]
   );
 
-  const sidebarWidth = isCollapsed ? '72px' : '200px';
+  const sidebarWidth = isCollapsed ? '72px' : '220px';
 
   return (
     <aside
@@ -190,7 +176,6 @@ export default function Sidebar() {
           ref={lineRef}
           className="absolute left-[0px] top-8 bottom-8 w-px bg-white/10 rounded-full"
         >
-          {/* Beam indicator at active section — on the line */}
           {!isTraveling && beamY > 0 && (
             <div
               className="absolute left-1/2 -translate-x-1/2"
